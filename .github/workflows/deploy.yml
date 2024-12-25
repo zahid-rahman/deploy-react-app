@@ -6,11 +6,9 @@ on:
       - master
 
 jobs:
+  # Build Job
   build:
     runs-on: ubuntu-latest
-    env: # Define environment variables globally for the job
-      VITE_API_ENDPOINTS: https://jsonplaceholder.typicode.com
-      VITE_TEST_KEY: test
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -26,16 +24,26 @@ jobs:
       - name: Build the project
         run: yarn build
 
-  Deploy:
-    needs: build
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: dist # Upload the built project directory
 
+  # Deploy Job
+  deploy:
     runs-on: ubuntu-latest
-
+    needs: build # This ensures the deploy job only runs after the build job is successful
     steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifact
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{secrets.VITE_API_TOKEN}}
-          accountId: ${{secrets.VITE_ACCOUNT_ID}}
+          apiToken: ${{ secrets.VITE_API_TOKEN }}
+          accountId: ${{ secrets.VITE_ACCOUNT_ID }}
           projectName: deploy-react-app
-          directory: dist
+          directory: dist # The downloaded artifact will be in the `dist` folder
