@@ -28,5 +28,5 @@ jobs:
         with:
           apiToken: ${{secrets.VITE_API_TOKEN}}
           accountId: ${{secrets.VITE_ACCOUNT_ID}}
-          projectName: deployment-react
+          projectName: deploy-react-app
           directory: dist
