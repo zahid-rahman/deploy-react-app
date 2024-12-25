@@ -26,6 +26,12 @@ jobs:
       - name: Build the project
         run: yarn build
 
+  Deploy:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
