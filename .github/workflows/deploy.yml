@@ -27,7 +27,7 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: build-artifact
+          name: build-art
           path: dist # Upload the built project directory
 
   # Deploy Job
@@ -38,7 +38,7 @@ jobs:
       - name: Download Build Artifact
         uses: actions/download-artifact@v3
         with:
-          name: build-artifact
+          name: build-art
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
