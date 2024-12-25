@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env: # Define environment variables globally for the job
+      VITE_API_ENDPOINTS: https://jsonplaceholder.typicode.com
+      VITE_TEST_KEY: test
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
